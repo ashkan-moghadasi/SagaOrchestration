@@ -1,3 +1,5 @@
+using Saga.Orchestrator.Proxies;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -9,6 +11,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpClient("OrderService", c => c.BaseAddress =new Uri("http://localhost:5120/"));
 builder.Services.AddHttpClient("InventoryService", c => c.BaseAddress =new Uri("http://localhost:5130/"));
 builder.Services.AddHttpClient("NotificationService", c => c.BaseAddress =new Uri("http://localhost:5140/"));
+
+builder.Services.AddSingleton<IOrderProxy,OrderProxy>();
+builder.Services.AddSingleton<IInventoryProxy,InventoryProxy>();
+builder.Services.AddSingleton<INotificationProxy,NotificationProxy>();
+builder.Services.AddSingleton<IOrderManager,OrderManager>();
+
 
 var app = builder.Build();
 
